@@ -1,0 +1,6 @@
+ss = [{'keys': ['wildtokyo casino'], 'clicks': 0, 'impressions': 1, 'ctr': 0, 'position': 11}, {'keys': ['winmachance casino'], 'clicks': 0, 'impressions': 3, 'ctr': 0, 'position': 23.666666666666668}, {'keys': ['winolot bonus'], 'clicks': 0, 'impressions': 1, 'ctr': 0, 'position': 23}, {'keys': ['winolot casino'], 'clicks': 0, 'impressions': 12, 'ctr': 0, 'position': 26}, {'keys': ['winolot opiniones'], 'clicks': 0, 'impressions': 1, 'ctr': 0, 'position': 28}, {'keys': ['winsane'], 'clicks': 0, 'impressions': 27, 'ctr': 0, 'position': 7.777777777777778}, {'keys': ['winvegasplus'], 'clicks': 0, 'impressions': 2, 'ctr': 0, 'position': 7.5}, {'keys': ['xxwin bet'], 'clicks': 0, 'impressions': 1, 'ctr': 0, 'position': 5}, {'keys': ['ybets casino'], 'clicks': 0, 'impressions': 1, 'ctr': 0, 'position': 15}, {'keys': ['yocasino 5€'], 'clicks': 0, 'impressions': 1, 'ctr': 0, 'position': 93}, {'keys': ['yocasino bono sin depósito'], 'clicks': 0, 'impressions': 2, 'ctr': 0, 'position': 80}]
+
+
+
+for i in ss:
+    print(i['keys'][0])
