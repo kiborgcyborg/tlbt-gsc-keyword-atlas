@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Keyword Search</h1>
+        <form id="search-form">
+            <input type="text" id="query" name="query" placeholder="Enter keyword" required>
+            <input type="number" id="min_score" name="min_score" placeholder="Min Score" step="0.1" value="0.5">
+            <input type="number" id="limit" name="limit" placeholder="Limit" value="1000">
+            <button type="submit">Search</button>
+        </form>
+        <button id="download-button">Download CSV</button>
+        <div id="stats"></div>
+        <div id="results">
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th>Keyword</th>
+                        <th>Similarity score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const query = document.getElementById('query').value;
+            const min_score = document.getElementById('min_score').value;
+            const limit = document.getElementById('limit').value;
+            fetch(`/search?query=${query}&min_score=${min_score}&limit=${limit}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsTable = document.getElementById('results-table').getElementsByTagName('tbody')[0];
+                    const statsDiv = document.getElementById('stats');
+                    resultsTable.innerHTML = '';
+                    statsDiv.innerHTML = '';
+                    if (data.error) {
+                        resultsTable.innerHTML = `<tr><td colspan="2">${data.error}</td></tr>`;
+                    } else {
+                        data.slice(0, 1000).forEach(item => {
+                            const row = resultsTable.insertRow();
+                            const cellKeyword = row.insertCell(0);
+                            const cellScore = row.insertCell(1);
+                            cellKeyword.textContent = item.keyword;
+                            cellScore.textContent = item.score;
+                        });
+                        statsDiv.innerHTML = `<p>Всього результатів: ${data.length}<br>В інтерфейсі відображаються лише 1000 рядків.<br>Завантаж файл щоб отримати повні дані</p>`;
+                    }
+                });
+        });
+
+        document.getElementById('download-button').addEventListener('click', function() {
+            const query = document.getElementById('query').value;
+            const min_score = document.getElementById('min_score').value;
+            const limit = document.getElementById('limit').value;
+            window.location.href = `/download?query=${query}&min_score=${min_score}&limit=${limit}`;
+        });
+    </script>
+</body>
+</html>
